@@ -1,0 +1,30 @@
+body{
+    text-align: center;
+    
+}
+.normal{
+    border:1px;
+    border-style:solid;
+    background-color: lightgray;
+    width:75px;
+}
+.trocar_nome{
+    display:none;
+}
+button{
+    width: 75px;
+    height: 75px;
+}
+table{
+    margin: auto;
+    width: auto;
+    height: auto;
+    text-align: center;
+}
+.dias_semana{
+    width:75px;
+    background-color: lightyellow;
+}
+form, input{
+    text-align: center;
+}
