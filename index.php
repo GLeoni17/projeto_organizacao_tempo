@@ -2,11 +2,40 @@
 <!DOCTYPE html>
 <html>
     <head>
-
         <meta charset="utf-8">
         <title>Organize suas atividades</title>
         <link rel="stylesheet" type="text/css" href="styles.css">
-        <script src="functions.js"></script>
+        <script>
+            aparecer=0;
+            id_m=0;
+            muda=0
+            function aparece(id){
+                id_m=id; //1 muda 2 nao
+                if(aparecer==0){
+                    document.getElementById('nova_palavra').style.display='block';
+                    document.getElementById('enviar_nova_palavra').style.display='block';
+                    document.getElementById('n_enviar_nova_palavra').style.display='block';
+                    aparecer++;
+                }
+                
+            }
+
+            function desaparece(){
+                aparecer--;
+                document.getElementById('nova_palavra').style.display='none';
+                document.getElementById('enviar_nova_palavra').style.display='none';
+                document.getElementById('n_enviar_nova_palavra').style.display='none';
+            }
+
+            function mudar_nome(s_n){
+                if(s_n==1){
+                    document.getElementById(id_m).innerHTML=document.getElementById('nova_palavra').value;
+                    document.getElementById('nova_palavra').value=' ';
+                }
+                desaparece();
+
+            }
+        </script>
         <script src="jquery-3.5.1.min"></script>
         <link href="bootstrap-4.4.1-dist/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
 
@@ -14,57 +43,46 @@
     <body>
     <form name="form">
             Nome: <input type="text" id="nome" /> <br><br>
-            <table border="1px solid black" name="tabela">
+            <table border="1px solid black" name="tabela" class="table table-striped">
                 <tr>
                     <?php
-                    $anda_hora=0;
-                    $dias=array(" ", "Segunda", "Terça", "Quarta", "Quinta", "Sexta");
+                    $dias=array("Segunda", "Terça", "Quarta", "Quinta", "Sexta");
                     $horarios=array(" ", "00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00");
-                        for($linhas=0; $linhas<5; $linhas++){
-                            for($colunas=0; $colunas<25; $colunas++){
-                                if($linhas==0 && $anda_hora<25){
-                                    $tabela[$linhas][$colunas]=$horarios[$anda_hora];
-                                    $anda_hora++;
-                                }else if($colunas==0){
-                                    $tabela[$linhas][$colunas]=$dias[$linhas];
-                                }else if(($colunas>=1 && $colunas<=7) || $colunas>=22){
-                                    $tabela[$linhas][$colunas]="Dormir "; //Preenche de 21 as 6 com "Dormir"
-                                }else{    
-                                    $tabela[$linhas][$colunas]="Nada ";
+                        for($i=0; $i<6; $i++){
+                            for($j=0; $j<25; $j++){
+                                if($i==0){
+                                    $tabela[$i][$j]=$horarios[$j];
+                                    continue;
                                 }
-                            }
-                        }
-                        for($linhas=0; $linhas<5; $linhas++){
-                            for($colunas=0; $colunas<25; $colunas++){
-                                if($colunas==0){
-                                    echo "<td>";
-                                }
-                                if($colunas==0 || $linhas==0){
-                                    echo "<input type='text' readonly id=$linhas$colunas class=\"dias_semana\" value=".$tabela[$linhas][$colunas].">";
+                                if($j==0 && $i>0){
+                                    $tabela[$i][$j]=$dias[$i-1];
+                                }else if(($j>0 && $j<8) || $j>21){
+                                    $tabela[$i][$j]="Dormir";
                                 }else{
-                                    echo "<input type='text' readonly id=$linhas$colunas class=\"normal\"  onclick='aparece(this.id)' value=".$tabela[$linhas][$colunas].">";
+                                    $tabela[$i][$j]="Nada";
                                 }
-                                if($colunas==24){
-                                    echo "</td>";
-                                }
-                            }
-                            if($linhas<5){
-                                echo"</tr>
-                                 <tr>";
                             }
                         }
-                        echo "</tr>";
+
+                        for($i=0; $i<25; $i++){
+                            echo "<tr>
+                                <th scope=\"row\"> <span  >".$tabela[0][$i]." </span> </th>";
+                                for($j=1; $j<6; $j++){
+                                    echo"<td><span id=$j$i onclick='aparece(this.id)'>".$tabela[$j][$i]."</span></td>";
+                                }
+                                echo "</tr>";
+                            
+                        }
                     ?>
             </table>
             <br>
-            <button value="Registrar">Registrar</button>
+            <input type="submit" value="Registrar" >
             <br> <br>
             <input type="text" class="trocar_nome" id="nova_palavra" placeholder="Coloque a nova atividade aqui">
             <br>
             <input type="button" class="trocar_nome" value="Mudar atividade" onclick="mudar_nome(1)" id="enviar_nova_palavra">
             <br>
-            <input type="button" class="trocar_nome" value="Nao mudar atividade" onclick="mudar_nome(0)" id="n_enviar_nova_palavra">
-            
+            <input type="button" class="trocar_nome" value="Nao mudar atividade" onclick="mudar_nome(0)" id="n_enviar_nova_palavra">    
         </form>
     </body>
 </html>

@@ -1,6 +1,5 @@
 body{
     text-align: center;
-    
 }
 .normal{
     border:1px;
@@ -23,7 +22,6 @@ table{
 }
 .dias_semana{
     width:75px;
-    background-color: lightyellow;
 }
 form, input{
     text-align: center;
