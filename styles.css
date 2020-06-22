@@ -1,4 +1,4 @@
-body{
+body, form, input{
     text-align: center;
 }
 .normal{
@@ -9,6 +9,8 @@ body{
 }
 .trocar_nome{
     display:none;
+    text-align: center;
+    margin-left:800px;
 }
 button{
     width: 75px;
@@ -23,6 +25,6 @@ table{
 .dias_semana{
     width:75px;
 }
-form, input{
-    text-align: center;
+#nova_palavra{
+    width:300px;
 }

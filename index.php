@@ -12,7 +12,11 @@
             function aparece(id){
                 id_m=id; //1 muda 2 nao
                 if(aparecer==0){
-                    document.getElementById('nova_palavra').style.display='block';
+                    if(id.charAt(0)==0){
+                        document.getElementById('trocar_hora').style.display='block';
+                    }else{
+                        document.getElementById('nova_palavra').style.display='block';
+                    }
                     document.getElementById('enviar_nova_palavra').style.display='block';
                     document.getElementById('n_enviar_nova_palavra').style.display='block';
                     aparecer++;
@@ -23,14 +27,20 @@
             function desaparece(){
                 aparecer--;
                 document.getElementById('nova_palavra').style.display='none';
+                document.getElementById('trocar_hora').style.display='none';
                 document.getElementById('enviar_nova_palavra').style.display='none';
                 document.getElementById('n_enviar_nova_palavra').style.display='none';
             }
 
             function mudar_nome(s_n){
                 if(s_n==1){
-                    document.getElementById(id_m).innerHTML=document.getElementById('nova_palavra').value;
+                    if(id_m.charAt(0)==0){
+                        document.getElementById(id_m).innerHTML=document.getElementById('trocar_hora').value;
+                    }else{
+                        document.getElementById(id_m).innerHTML=document.getElementById('nova_palavra').value;
+                    }
                     document.getElementById('nova_palavra').value=' ';
+                    document.getElementById('trocar_hora').value=' ';
                 }
                 desaparece();
 
@@ -64,15 +74,15 @@
                             }
                         }
 
-                        for($i=0; $i<25; $i++){
+                        for($i=0; $i<6; $i++){
                             echo "<tr>
-                                <th scope=\"row\"> <span  >".$tabela[0][$i]." </span> </th>";
-                                for($j=1; $j<6; $j++){
-                                    echo"<td><span id=$j$i onclick='aparece(this.id)'>".$tabela[$j][$i]."</span></td>";
+                                <th scope=\"row\"> <span  >".$tabela[$i][0]." </span> </th>";
+                                for($j=1; $j<25; $j++){
+                                    echo"<td><span id=$i$j onclick='aparece(this.id)'>".$tabela[$i][$j]."</span></td>";
                                 }
-                                echo "</tr>";
-                            
+                            echo "</tr>";  
                         }
+                        
                     ?>
             </table>
             <br>
@@ -80,9 +90,11 @@
             <br> <br>
             <input type="text" class="trocar_nome" id="nova_palavra" placeholder="Coloque a nova atividade aqui">
             <br>
-            <input type="button" class="trocar_nome" value="Mudar atividade" onclick="mudar_nome(1)" id="enviar_nova_palavra">
+            <input type="time" class="trocar_nome" id="trocar_hora" >
             <br>
-            <input type="button" class="trocar_nome" value="Nao mudar atividade" onclick="mudar_nome(0)" id="n_enviar_nova_palavra">    
+            <input type="button" class="trocar_nome" value="Mudar" onclick="mudar_nome(1)" id="enviar_nova_palavra">
+            <br>
+            <input type="button" class="trocar_nome" value="Nao mudar" onclick="mudar_nome(0)" id="n_enviar_nova_palavra">    
         </form>
     </body>
 </html>
