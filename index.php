@@ -4,8 +4,13 @@
     <head>
         <meta charset="utf-8">
         <title>Organize suas atividades</title>
+        <link href="bootstrap-4.4.1-dist/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
         <link rel="stylesheet" type="text/css" href="styles.css">
         <script>
+            function troca_cor_principal(id){
+                document.getElementById(id).style.backgroundColor="blue";
+            }
+
             aparecer=0;
             id_m=0;
             muda=0
@@ -39,21 +44,26 @@
                     }else{
                         document.getElementById(id_m).innerHTML=document.getElementById('nova_palavra').value;
                     }
-                    document.getElementById('nova_palavra').value=' ';
-                    document.getElementById('trocar_hora').value=' ';
                 }
+                document.getElementById('nova_palavra').value=' ';
+                document.getElementById('trocar_hora').value=' ';
                 desaparece();
 
             }
+            function termina(id){
+                document.getElementById(id).style.display='none';
+                desaparece();
+                window.print();
+                window.refresh();
+            }
         </script>
         <script src="jquery-3.5.1.min"></script>
-        <link href="bootstrap-4.4.1-dist/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
 
     </head>
-    <body>
+    <body onload="inicia()">
     <form name="form">
-            Nome: <input type="text" id="nome" /> <br><br>
-            <table border="1px solid black" name="tabela" class="table table-striped">
+            <h3>Tabela para: <input type="text" id="nome" class="tira_borda"/> </h3>
+            <table name="tabela" class="table table-striped">
                 <tr>
                     <?php
                     $dias=array("Segunda", "Terça", "Quarta", "Quinta", "Sexta");
@@ -76,7 +86,13 @@
 
                         for($i=0; $i<6; $i++){
                             echo "<tr>
-                                <th scope=\"row\"> <span  >".$tabela[$i][0]." </span> </th>";
+                                <th class=\"outra_cor\" > <span id=\"p".$i.$j."\" >".$tabela[$i][0]." </span> </th>";
+                                if($i==0){
+                                    for($j=1; $j<25; $j++){
+                                        echo"<td class=\"outra_cor\"><span id=$i$j  onclick='aparece(this.id)'>".$tabela[$i][$j]."</span></td>";
+                                    }
+                                    continue;
+                                }
                                 for($j=1; $j<25; $j++){
                                     echo"<td><span id=$i$j onclick='aparece(this.id)'>".$tabela[$i][$j]."</span></td>";
                                 }
@@ -86,10 +102,9 @@
                     ?>
             </table>
             <br>
-            <input type="submit" value="Registrar" >
-            <br> <br>
+            <button class="btn btn-primary active" id="registrar" onclick="termina(this.id)" value="Registrar" >Salvar</button>
+            <br> <br> <br>
             <input type="text" class="trocar_nome" id="nova_palavra" placeholder="Coloque a nova atividade aqui">
-            <br>
             <input type="time" class="trocar_nome" id="trocar_hora" >
             <br>
             <input type="button" class="trocar_nome" value="Mudar" onclick="mudar_nome(1)" id="enviar_nova_palavra">
