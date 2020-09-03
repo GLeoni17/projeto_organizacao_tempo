@@ -4,6 +4,7 @@ body, form, input{
 .trocar_nome{
     display:none;
     text-align: center;
+    background-color: white;
 }
 button{
     width: 75px;
@@ -26,6 +27,7 @@ table{
 #nova_palavra{
     margin-left: 825px;
     width: 270px;
+    background-color: white;
 }
 #trocar_hora{
     margin-left: 905px;
@@ -38,6 +40,7 @@ table{
 }
 .tira_borda{
     border: none;
+    border-bottom: 1px solid black;
 }
 body, input{
     background-color: #d3d3d3;
@@ -52,4 +55,8 @@ h3, input{
 }
 td, th, tr{
     border: 1px solid black;
+}
+.tabela{
+    margin-left: 20px;
+    margin-right: 20px;
 }
