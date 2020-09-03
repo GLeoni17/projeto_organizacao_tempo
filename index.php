@@ -13,7 +13,7 @@
                     console.log(JSON.stringify(data, null, 2));
                 });
             });
-            /*aparecer=0;
+            aparecer=0;
             id_m=0;
             muda=0
             function aparece(id, h){
@@ -65,7 +65,7 @@
                 document.getElementById(id).style.marginLeft="923px"
                 s_borda[0].style.borderBottom="1px solid black";
                 document.getElementById('limpar').style.display='block';
-            }*/
+            }
         </script>
 
     </head>
