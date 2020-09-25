@@ -1,0 +1,21 @@
+* {
+    padding: 2cm, 2cm, 2cm, 2cm;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: sans-serif;
+    font-size: 16px;
+}
+
+body {
+    height: 95%;
+}
+
+.calendar-days {
+    border: 1px solid blue;
+    border-radius: 1%;
+    text-align: center;
+}
+
+.outra_cor {
+    text-align: center;
+}
