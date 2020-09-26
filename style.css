@@ -7,13 +7,9 @@
 }
 
 body {
-    height: 95%;
-}
-
-.calendar-days {
-    border: 1px solid blue;
-    border-radius: 1%;
-    text-align: center;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
 }
 
 .outra_cor {
