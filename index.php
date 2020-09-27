@@ -7,10 +7,7 @@
         <link href="bootstrap-4.4.1-dist/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
         <?php //include "func.php"; ?>
         <script>
-            var dormir, acordar, conteudo = "<meta charset=\"UTF-8\">";
-            conteudo += "<link rel=\"stylesheet\" href=\"style.css\">";
-            conteudo+="<link href=\"bootstrap-4.4.1-dist/css/bootstrap.min.css\" type=\"text/css\" rel=\"stylesheet\" />";
-            conteudo+="<div class=\"position-relative p-2 p-md-5 m-md-2 text-center bg-light\">";
+            var dormir, acordar; 
             function aparece(id, h){
 
                     if(h==2){
@@ -67,11 +64,15 @@
                 acordar=leitura_horario(2);
 
                 $.post("escreve_tabela.php", {"h1":acordar, "h2":dormir}, function(msg){
-                    console.log(msg);
+                    $("#tabela_dias").html(msg);
                 });
 
                 $("#salvar").click(function(){
                     $("#sumir").hide();
+                    var conteudo = "<meta charset=\"UTF-8\">";
+                    conteudo += "<link rel=\"stylesheet\" href=\"style.css\">";
+                    conteudo+="<link href=\"bootstrap-4.4.1-dist/css/bootstrap.min.css\" type=\"text/css\" rel=\"stylesheet\" />";
+                    conteudo+="<div class=\"position-relative p-2 p-md-5 m-md-2 text-center bg-light\">";
                     conteudo+=$("#table").html();
                     conteudo+="</table>";
                     var d = new Date();
