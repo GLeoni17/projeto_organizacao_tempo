@@ -1,102 +1,79 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <script src="jquery-3.5.1.min.js"></script>
-        <link rel="stylesheet" href="style.css">
-        <link href="bootstrap-4.4.1-dist/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
-        <?php //include "func.php"; ?>
-        <script>
-            var dormir, acordar; 
-            function aparece(id, h){
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Montando a Tabela</title>
+    <link href='bootstrap/css/bootstrap.min.css' rel='stylesheet' />   
+    <script src="jquery-3.5.1.min.js"></script>
 
-                    if(h==2){
-                        var l=prompt("Insira o novo horario");
-                    }else{
-                        var l=prompt("Insira a nova atividade");
-                    }
+    <script>
 
-                if((l[2]!=":" && h==2) || (l.length > 5 && h==2)){ 
-                    alert("Insira no formato 00:00");
-                }else if(l[0]=="2" && l[1]=="4"){
-                    alert("Insira um horário entre 00:00 a 23:00");
-                }else{
-                    $("#"+id).html("<span>"+l+"</span>");
-                }
+        $(function(){
+            $("#montar").click(function(){
+                var data = new Date();
+                var mes = data.getMonth();
+                var ano = data.getFullYear();
+
+                var dias_meses = new Array("31", "28", "31", "30", "31", "30", "31", "31", "30", "31", "30", "31");
+
+                var dia_semana = 1 + parseInt(mes) + parseInt(ano);
+
+                dia_semana = (dia_semana - (7 * Math.floor(dia_semana/7)) );      
                 
-            }
+                $("#quando_comeca_mes").val(dia_semana+1);
 
-            function isNumber(n) {
-                return !isNaN(parseFloat(n)) && isFinite(n);
-            }
-
-            function leitura_horario(n){
-                if(n==1){
-                    n="dorme";
+                if(mes == 1 && ano % 4 == 0){ // Fev + Ano Bisexto
+                    $("#dia_acaba_mes").val("29");
                 }else{
-                    n="acorda";
+                    $("#dia_acaba_mes").val(dias_meses[mes]);
                 }
-                do{
-                    var leitura = prompt("Que horas voce "+n+"?");
-                    test=true;
-                    if(leitura[2]!=":" || leitura.length > 5){
-                        alert("Insira no formato 00:00");
-                        test=false;
-                    }else if(leitura>"23:59"){
-                        alert("Insira apenas horarios entre 00:00 e 23:59");
-                        test=false;
-                    }else{
-                        for(i = 0; i<leitura.length; i++){
-                            if(!isNumber(leitura[i]) && i!=2){
-                                alert("Insira no formato 00:00");
-                                test=false;
-                                break;
-                            }
-                        }
-                    }
-                }while(test!=true);
-                return leitura;
-            }
-            
-            $(document).ready(function(){
 
-                dormir=leitura_horario(1);
-                acordar=leitura_horario(2);
-
-                $.post("escreve_tabela.php", {"h1":acordar, "h2":dormir}, function(msg){
-                    $("#tabela_dias").html(msg);
-                });
-
-                $("#salvar").click(function(){
-                    $("#sumir").hide();
-                    var conteudo = "<meta charset=\"UTF-8\">";
-                    conteudo += "<link rel=\"stylesheet\" href=\"style.css\">";
-                    conteudo+="<link href=\"bootstrap-4.4.1-dist/css/bootstrap.min.css\" type=\"text/css\" rel=\"stylesheet\" />";
-                    conteudo+="<div class=\"position-relative p-2 p-md-5 m-md-2 text-center bg-light\">";
-                    conteudo+=$("#table").html();
-                    conteudo+="</table>";
-                    var d = new Date();
-                    $.post("salvar.php", {"conteudo":conteudo, "data_y":d.getFullYear(), "data_m":d.getMonth()+1, "data_d":d.getDate()}, function(msg){
-                    });
-                    window.open("Tabela"+d.getFullYear()+(d.getMonth()+1)+d.getDate()+".html");
-                    $("#sumir").show();
-                });
+                $("form[name='form']").submit();
+                
             });
-        </script>
-    </head>
-    <body>
-    <div class="wrapper">
-        <div class="position-relative p-2 p-md-5 m-md-2 text-center bg-light">
-            <div class="col-12">
-                <table id="tabela_dias" class="table table-responsive">
-                </table>
-            </div>
-        </div>
-        <div id="sumir" class="row">
-                <span class="col-md-5"></span>
-                <button id="salvar" type="button" class="btn btn-lg btn-dark btn-block outra-cor col-md-1">Salvar</button>
-                <span class="col-md-5"></span>
-            </div>
-    </div>
-    </body>
+        });
+
+    </script>
+
+</head>
+<body>
+
+<!--
+    nome = Nome da pessoa
+    corp_tabela = Cor Primaria da tabela
+    cors_tabela = Cor Secundaria da Tabela
+    corf_tabela = Cor da Fonte da tabela
+-->
+
+    <form name="form" action="montar_tabela.php" method="post">
+
+        <label for="nome">Tabela para:</label>
+        <input type="text" name="nome" id="nome">
+
+        <br><br>
+
+        <label for="corp_tabela">Cor primária da tabela:</label>
+        <input type="color" name="corp_tabela" id="corp_tabela">
+
+        <br><br>
+
+        <label for="cors_tabela">Cor secundária da tabela:</label>
+        <input type="color" name="cors_tabela" id="cors_tabela">
+        
+        <br><br>
+
+        <label for="corf_tabela">Cor da fonte da tabela:</label>
+        <input type="color" name="corf_tabela" id="corf_tabela">
+        
+        <br><br>    
+
+        <input type="hidden" name="quando_comeca_mes" id="quando_comeca_mes">
+        <input type="hidden" name="dia_acaba_mes" id="dia_acaba_mes">
+
+    </form>
+
+    <button id="montar">Montar</button>
+
+</body>
 </html>
